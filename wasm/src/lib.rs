@@ -9,7 +9,6 @@ use wasm_bindgen::prelude::*;
 #[global_allocator]
 static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
-use translator::Translator;
 use mips::{Mips, OptimizationConfig};
 
 #[wasm_bindgen]
@@ -24,7 +23,7 @@ pub fn translate(
     replace_defines: bool,
     replace_tags: bool,
 ) -> String {
-    let program_item = myps::lexer::lex_str(&source).unwrap();
+    let program_item = myps::lexer::lex_string(source).unwrap();
     let mut translator = translator::Translator::default();
     let lines = translator.translate_item(program_item).unwrap();
 
