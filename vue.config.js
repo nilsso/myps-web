@@ -4,6 +4,20 @@ const webpack = require("webpack");
 
 module.exports = {
     publicPath: '/apps/myps/',
+    configureWebpack: {
+        module: {
+            rules: [
+                {
+                    test: /\.txt$/i,
+                    use: 'raw-loader',
+                },
+                {
+                    test: /\.md$/i,
+                    use: 'raw-loader',
+                },
+            ],
+        },
+    },
     chainWebpack: (config) => {
         config
             .plugin("wasm-pack")
