@@ -55,12 +55,11 @@ export default {
 
 <style>
 #guide-container {
-    margin-left: 20%;
-    margin-right: 20%;
-    /* margin: 0 20%; */
+    margin-left: 5%;
+    margin-right: 5%;
 }
 pre {
-    width: 50%;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
     background: #2e3440;
@@ -71,11 +70,6 @@ pre {
 code {
     padding: 0 !important;
 }
-.guide-example {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1em;
-}
 .guide-example pre {
     width: revert;
 }
@@ -85,5 +79,23 @@ code {
 table {
     margin-left: auto;
     margin-right: auto;
+}
+pre {
+    width: auto;
+}
+@media (min-width: 680px) {
+    #guide-container {
+        margin-left: 20%;
+        margin-right: 20%;
+        /* margin: 0 20%; */
+    }
+    /* pre { */
+    /*     width: 50%; */
+    /* } */
+    .guide-example {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1em;
+    }
 }
 </style>

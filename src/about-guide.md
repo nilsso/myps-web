@@ -48,7 +48,7 @@ went wrong, but I'll eventually include propper error messages on top of proper 
 ## Grammar Guide
 
 MYPS preserves much of the grammar of Python, but not everything can be the same when the purpose
-to to be translated into assembly as accurately as possible.
+is to be translated into assembly as accurately as possible.
 
 ### Variables, lifetimes, and register allocation
 

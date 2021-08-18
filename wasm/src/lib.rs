@@ -12,7 +12,12 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 use mips::{Mips, OptimizationConfig};
 
 #[wasm_bindgen]
-pub fn translate(
+pub fn hello() -> String {
+    "Hello".to_owned()
+}
+
+#[wasm_bindgen]
+pub fn translate_myps(
     source: String,
     optimize_registers: bool,
     remove_comments: bool,

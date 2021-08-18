@@ -1,0 +1,55 @@
+<template>
+    <div id="mips-optimizer-container">
+        <textarea
+            id="mips-optimizer-input"
+            v-model="mipsSource"
+            placeholder="MIPS input"
+            rows="15"
+            :class="editorClass"
+            @keydown.shift.enter.prevent="compile"
+        />
+        <textarea
+            id="mips-optimizer-output"
+            v-model="mipsSource"
+            placeholder="MIPS output"
+            rows="15"
+            :class="editorClass"
+            @keydown.shift.enter.prevent="compile"
+        />
+        <div id="mips-optimizer-controls">
+            <button @click="compile">
+                Compile
+            </button>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    setup() {
+        
+    },
+}
+</script>
+
+<style scoped>
+    #mips-optimizer-container {
+        padding: 0 1%;
+    }
+    #mips-optimizer-input, #mips-optimizer-output {
+        font-family: 'Courier New', Courier, monospace;
+        width: 100%;
+        margin-bottom: 1em;
+        resize: none;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+    textarea {
+        padding: 5px;
+        border-style: solid;
+        border-radius: 5px;
+    }
+    textarea:focus {
+        outline: none;
+    }
+</style>

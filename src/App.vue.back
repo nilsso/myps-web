@@ -1,0 +1,90 @@
+<template>
+    <div id="container">
+        <tabs v-model="selectedTab">
+            <tab
+                val="myps-translator"
+                label="Myps Translator"
+                class="tab"
+            />
+            <tab
+                val="mips-optimizer"
+                label="Mips Optimizer"
+                class="tab"
+            />
+            <tab
+                val="about"
+                label="About/Guide"
+                class="tab"
+            />
+        </tabs>
+        <tab-panels v-model="selectedTab">
+            <tab-panel val="myps-translator">
+                <MypsTranslator :class="[(selectedTab == 'myps-translator') ? '' : 'hidden']" />
+            </tab-panel>
+            <tab-panel val="mips-optimizer">
+                <MipsOptimizer
+                    :wasm="wasm"
+                    :class="[(selectedTab == 'mips-optimizer') ? '' : 'hidden']"
+                />
+            </tab-panel>
+            <tab-panel val="about">
+                <AboutGuide :class="[(selectedTab == 'about') ? '' : 'hidden']" />
+            </tab-panel>
+        </tab-panels>
+    </div>
+</template>
+
+<script>
+import { reactive, toRefs } from 'vue';
+import { Tabs, Tab, TabPanels, TabPanel } from 'vue3-tabs';
+
+import MypsTranslator from './components/MypsTranslator.vue';
+import MipsOptimizer from './components/MipsOptimizer.vue';
+import AboutGuide from './components/AboutGuide.vue';
+
+export default {
+    name: 'App',
+    components: {
+        Tabs,
+        Tab,
+        TabPanels,
+        TabPanel,
+        MypsTranslator,
+        MipsOptimizer,
+        AboutGuide,
+    },
+    setup() {
+        const wasm = import('../wasm/pkg');
+
+        const state = reactive({
+            selectedTab: 'myps-translator',
+            wasm,
+        });
+        return {
+            ...toRefs(state),
+        }
+    },
+    data() {
+        return {
+        }
+    },
+}
+</script>
+
+<style>
+#app {
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+}
+/* #container { */
+/*     padding: 0 10%; */
+/* } */
+/* .tab-panel { */
+/*     display: none; */
+/* } */
+.hidden {
+    display: none;
+}
+</style>

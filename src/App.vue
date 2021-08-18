@@ -4,31 +4,45 @@
             <tab
                 val="editor"
                 label="Editor"
-                class="tab"
+                :class="['tab', selectedTab=='editor' ? 'selected' : '']"
             />
             <tab
                 val="about"
                 label="About/Guide"
-                class="tab"
+                :class="['tab', selectedTab=='about' ? 'selected' : '']"
             />
         </tabs>
-        <tab-panels v-model="selectedTab">
-            <tab-panel val="editor">
-                <Editor :class="[(selectedTab == 'editor') ? '' : 'hidden']" />
-            </tab-panel>
-            <tab-panel val="about">
-                <AboutGuide :class="[(selectedTab == 'about') ? '' : 'hidden']" />
-            </tab-panel>
-        </tab-panels>
+        <div id="content">
+            <tab-panels v-model="selectedTab">
+                <tab-panel val="editor">
+                    <suspense>
+                        <template #default>
+                            <Editor />
+                        </template>
+                        <template #fallback>
+                            <p class="loading">Loading Wasm...</p>
+                        </template>
+                    </suspense>
+                </tab-panel>
+                <tab-panel val="about">
+                    <AboutGuide :class="[(selectedTab == 'about') ? '' : 'hidden']" />
+                </tab-panel>
+            </tab-panels>
+        </div>
     </div>
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue';
+import {
+    reactive,
+    toRefs,
+    /* defineAsyncComponent, */
+} from 'vue';
 import { Tabs, Tab, TabPanels, TabPanel } from 'vue3-tabs';
 
-import Editor from './components/Editor.vue';
 import AboutGuide from './components/AboutGuide.vue';
+import Editor from './components/Editor.vue';
+/* import MipsOptimizer from './components/MipsOptimizer.vue'; */
 
 export default {
     name: 'App',
@@ -37,30 +51,36 @@ export default {
         Tab,
         TabPanels,
         TabPanel,
-        Editor,
         AboutGuide,
+        Editor,
     },
     setup() {
         const state = reactive({
             selectedTab: 'editor',
         });
+
         return {
             ...toRefs(state),
-        }
-    },
-    data() {
-        return {
         }
     },
 }
 </script>
 
 <style>
+body {
+    margin: 0 24px;
+}
+#content {
+    margin: 12px 0;
+}
 #app {
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
+}
+.tab.selected {
+    border-bottom: solid 3px chocolate;
 }
 /* #container { */
 /*     padding: 0 10%; */
@@ -70,5 +90,20 @@ export default {
 /* } */
 .hidden {
     display: none;
+}
+.loading {
+    animation-name: loading;
+    animation-timing-function: ease-in-out;
+    animation-duration: 1s;
+    animation-direction: alternate;
+    animation-iteration-count: infinite;
+}
+@keyframes loading {
+    from {
+        margin-left: 0;
+    }
+    to {
+        margin-left: 12px;
+    }
 }
 </style>
