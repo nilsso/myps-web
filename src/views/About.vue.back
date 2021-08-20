@@ -1,0 +1,39 @@
+<template>
+    <div class="w-1/2 mx-auto pt-4 pb-1/3h text-justify">
+        <!--<AboutMd />-->
+        <Test></Test>
+    </div>
+</template>
+
+<script>
+/* import { defineComponent } from 'vue' */
+import Example from '@components/AboutExample.vue'
+
+import vmark from 'vmark';
+
+/* import { plainText } from '@assets/about.md' */
+import { plainText } from '@components/Test.md.vue'
+
+/* console.log(plainText); */
+
+const Test = vmark("# Hello");
+
+console.log(typeof(Test));
+
+/* import { VueComponentWith as AboutMdWith } from '@assets/about.md' */
+/* const AboutMd = defineComponent({ */
+/*     ...AboutMdWith({ Example }), */
+/*     emits: [ 'snippet' ], */
+/* }) */
+
+export default {
+    name: 'About',
+    components: {
+        Example,
+        /* AboutMd, */
+        Test,
+    },
+    setup() {
+    }
+}
+</script>

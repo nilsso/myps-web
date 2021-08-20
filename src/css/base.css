@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* const btnSized = (mixin, size) { */
+/*     '.btn-' + size: { */
+/*         @apply */ 
+/*     } */
+/* } */
+
+/* const mixins_opts = { */
+/*     mixins: { */
+/*         'btn-sized': btnSized */
+/*     } */
+/* } */
+
+
+@layer base {
+    body {
+        @apply m-0;
+
+        * {
+            @apply font-extralight text-justify;
+        }
+    }
+    strong * {
+        @apply font-semibold;
+    }
+    p {
+        @apply my-4;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        @apply text-gray-500;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-semibold my-4;
+    }
+    h1 {
+        @apply text-xl;
+    }
+    h2 {
+        @apply text-lg;
+    }
+    ol, ul {
+        @apply pl-6;
+    }
+    ul {
+        @apply list-disc;
+    }
+    ol {
+        @apply list-decimal;
+    }
+    table {
+        @apply mx-auto my-4 border-separate;
+        border-spacing: 1rem 0;
+
+        th {
+            @apply font-semibold;
+        }
+    }
+    a {
+        @apply text-blue-500;
+    }
+    hr {
+        @apply my-2;
+    }
+    code {
+        @apply text-sm;
+    }
+}
+
+@layer components {
+    .btn {
+        @apply text-white bg-gray-500 text-base text-center px-2 py-1 rounded;
+        &:hover {
+            @apply bg-gray-700;
+        }
+    }
+    .btn-inv {
+        @extend .btn;
+        @apply text-gray-500 bg-white ring-gray-500 ring-2 ring-inset;
+        &:hover {
+            @apply text-gray-700 bg-white ring-gray-700;
+        }
+    }
+    .btn-red {
+        @extend .btn;
+        @apply bg-red-500;
+        &:hover {
+            @apply bg-red-700;
+        }
+    }
+    .btn-red-inv {
+        @extend .btn-inv;
+        @apply text-red-500 ring-red-500;
+        &:hover {
+            @apply text-red-700 ring-red-700;
+        }
+    }
+    .btn-blue {
+        @extend .btn;
+        @apply bg-blue-500;
+        &:hover {
+            @apply bg-blue-700;
+        }
+    }
+    .btn-blue-inv {
+        @extend .btn-inv;
+        @apply text-blue-500 ring-blue-500;
+        &:hover {
+            @apply text-blue-700 ring-blue-700;
+        }
+    }
+    .btn-group {
+        @apply grid grid-cols-2 auto-rows-auto divide-x divide-gray-700;
+
+        .btn:first-child {
+            @apply rounded-r-none;
+        }
+        .btn:last-child {
+            @apply rounded-l-none;
+        }
+        .btn:only-child {
+            @apply rounded;
+        }
+    }
+}

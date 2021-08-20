@@ -3,70 +3,45 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build",
-        "lint": "vue-cli-service lint"
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
     },
     "dependencies": {
+        "codemirror": "^5.62.2",
         "core-js": "^3.16",
-        "lodash": "^4.17.21",
+        "js-string-compression": "^1.0.1",
         "vue": "^3.0.0",
-        "vue3-markdown-it": "^1.0.9"
+        "vue-router": "^4.0.0-0"
     },
     "devDependencies": {
-        "@vue/cli-plugin-babel": "~4.5.0",
+        "@vitejs/plugin-vue": "^1.4.0",
         "@vue/cli-plugin-eslint": "~4.5.0",
+        "@vue/cli-plugin-router": "~4.5.0",
         "@vue/cli-service": "~4.5.0",
         "@vue/compiler-sfc": "^3.0.0",
         "@wasm-tool/wasm-pack-plugin": "^1.5.0",
-        "babel-eslint": "^10.1.0",
-        "babel-runtime": "^6.26.0",
+        "autoprefixer": "^10.3.1",
         "eslint": "^6.7.2",
+        "eslint-plugin-import": "^2.20.2",
         "eslint-plugin-vue": "^7.0.0",
         "highlight.js": "^11.2.0",
-        "markdown-it-anchor": "^8.1.2",
-        "markdown-it-highlightjs": "^3.5.0",
-        "raw-loader": "^4.0.2",
-        "vue3-tabs": "^0.1.12"
-    },
-    "eslintConfig": {
-        "root": true,
-        "env": {
-            "node": true
-        },
-        "extends": [
-            "plugin:vue/vue3-essential",
-            "plugin:vue/vue3-recommended",
-            "eslint:recommended"
-        ],
-        "parserOptions": {
-            "parser": "babel-eslint"
-        },
-        "ignorePatterns": [
-            "wasm/pkg/*"
-        ],
-        "rules": {
-            "no-undef": "warn",
-            "no-unused-vars": "warn",
-            "no-extra-semi": "warn",
-            "vue/html-indent": [
-                "warn",
-                4
-            ],
-            "vue/max-attributes-per-line": [
-                "warn",
-                {
-                    "singleline": {
-                        "max": 3,
-                        "allowFirstLine": true
-                    }
-                }
-            ]
-        }
-    },
-    "browserslist": [
-        "> 1%",
-        "last 2 versions",
-        "not dead"
-    ]
+        "postcss": "^8.3.6",
+        "postcss-at-rules-variables": "^0.3.0",
+        "postcss-extend": "^1.0.5",
+        "postcss-import": "^14.0.2",
+        "postcss-mixins": "^8.1.0",
+        "postcss-nested": "^5.0.6",
+        "postcss-simple-vars": "^6.0.3",
+        "postcss-variables": "^1.1.1",
+        "tailwindcss": "^2.2.7",
+        "vite": "^2.5.0",
+        "vite-aliases": "^0.8.6",
+        "vite-plugin-markdown": "^2.0.2",
+        "vite-plugin-plain-text": "^1.1.4",
+        "vite-plugin-rsw": "^1.8.1",
+        "vmark": "^1.2.0",
+        "vmark-loader": "^1.0.0",
+        "vue3-highlightjs": "^1.0.5"
+    }
 }
