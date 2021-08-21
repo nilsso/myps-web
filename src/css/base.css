@@ -20,7 +20,8 @@
         @apply m-0;
 
         * {
-            @apply font-extralight text-justify;
+            /* @apply font-extralight; */
+            @apply text-justify;
         }
     }
     strong * {
@@ -60,6 +61,14 @@
     }
     a {
         @apply text-blue-500;
+        &:hover {
+            @apply text-blue-700;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            &:hover {
+                @apply text-blue-700;
+            }
+        }
     }
     hr {
         @apply my-2;
@@ -71,7 +80,8 @@
 
 @layer components {
     .btn {
-        @apply text-white bg-gray-500 text-base text-center px-2 py-1 rounded;
+        @apply text-white bg-gray-500 text-center px-2e py-1e rounded;
+        line-height: 1 !important;
         &:hover {
             @apply bg-gray-700;
         }
@@ -124,4 +134,28 @@
             @apply rounded;
         }
     }
+}
+
+@layer utilities {
+    /* @import '@css/transitions' */
+    .fade-enter-active { @apply transition duration-200; }
+    .fade-enter-from   { @apply opacity-0; }
+    .fade-enter-to     { @apply opacity-100; }
+    .fade-leave-active { @apply transition duration-200; }
+    .fade-leave-from   { @apply opacity-100; }
+    .fade-leave-to     { @apply opacity-0; }
+
+    .fade-slide-left-enter-active { @apply transition duration-300; }
+    .fade-slide-left-enter-from   { @apply opacity-0 transform-gpu -translate-x-5; }
+    .fade-slide-left-enter-to     { @apply opacity-100; }
+    .fade-slide-left-leave-active { @apply transition duration-300; }
+    .fade-slide-left-leave-from   { @apply opacity-100; }
+    .fade-slide-left-leave-to     { @apply opacity-0 transform-gpu translate-x-5; }
+
+    .fade-slide-right-enter-active { @apply transition duration-300; }
+    .fade-slide-right-enter-from   { @apply opacity-0 transform-gpu translate-x-5; }
+    .fade-slide-right-enter-to     { @apply opacity-100; }
+    .fade-slide-right-leave-active { @apply transition duration-300; }
+    .fade-slide-right-leave-from   { @apply opacity-100; }
+    .fade-slide-right-leave-to     { @apply opacity-0 transform-gpu -translate-x-5; }
 }

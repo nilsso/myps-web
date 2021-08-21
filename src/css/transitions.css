@@ -1,58 +1,20 @@
-@mixin transition($name,
-    $enterActive, $enterFrom, $enterTo,
-    $leaveActive, $leaveFrom, $leaveTo
-) {
-    .#{$name}-enter-active {
-        @apply #{$enterActive};
-    }
-    .#{$name}-enter-from {
-        @apply #{$enterFrom};
-    }
-    .#{$name}-enter-to {
-        @apply #{$enterTo};
-    }
-    .#{$name}-leave-active {
-        @apply #{$leaveActive};
-    }
-    .#{$name}-leave-from {
-        @apply #{$leaveFrom};
-    }
-    .#{$name}-leave-to {
-        @apply #{$leaveTo};
-    }
-}
+.fade-enter-active { @apply transition duration-200; }
+.fade-enter-from   { @apply opacity-0; }
+.fade-enter-to     { @apply opacity-100; }
+.fade-leave-active { @apply transition duration-200; }
+.fade-leave-from   { @apply opacity-100; }
+.fade-leave-to     { @apply opacity-0; }
 
-@layer utilities {
-    @include transition('fade',
-        'transition duration-200',
-        'opacity-0',
-        'opacity-100',
-        'transition duration-200',
-        'opacity-100',
-        'opacity-0');
+.fade-slide-left-enter-active { @apply transition duration-300; }
+.fade-slide-left-enter-from   { @apply opacity-0 transform -translate-x-5; }
+.fade-slide-left-enter-to     { @apply opacity-100; }
+.fade-slide-left-leave-active { @apply transition duration-300; }
+.fade-slide-left-leave-from   { @apply opacity-100; }
+.fade-slide-left-leave-to     { @apply opacity-0 transform translate-x-5; }
 
-    @include transition('fade-slide-left',
-        'transition duration-300',
-        'opacity-0 transform -translate-x-5',
-        'opacity-100',
-        'transition duration-300',
-        'opacity-100',
-        'opacity-0 transform translate-x-5');
-
-    @include transition('fade-slide-right',
-        'transition duration-300',
-        'opacity-0 transform translate-x-5',
-        'opacity-100',
-        'transition duration-300',
-        'opacity-100',
-        'opacity-0 transform -translate-x-5');
-
-    @include transition('toggle',
-        'transition duration-150 ease-in-out transform',
-        '-translate-y-3 scale-95 opacity-0',
-        'translate-y-0 scale-100 opacity-100',
-        'transition duration-150 ease-in transform',
-        'translate-y-0 scale-100 opacity-100',
-        '-translate-y-3 scale-95 opacity-0');
-}
-
+.fade-slide-right-enter-active { @apply transition duration-300; }
+.fade-slide-right-enter-from   { @apply opacity-0 transform translate-x-5; }
+.fade-slide-right-enter-to     { @apply opacity-100; }
+.fade-slide-right-leave-active { @apply transition duration-300; }
+.fade-slide-right-leave-from   { @apply opacity-100; }
+.fade-slide-right-leave-to     { @apply opacity-0 transform -translate-x-5; }

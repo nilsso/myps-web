@@ -15,6 +15,7 @@
         "vue-router": "^4.0.0-0"
     },
     "devDependencies": {
+        "@highlightjs/vue-plugin": "^2.0.1",
         "@vitejs/plugin-vue": "^1.4.0",
         "@vue/cli-plugin-eslint": "~4.5.0",
         "@vue/cli-plugin-router": "~4.5.0",

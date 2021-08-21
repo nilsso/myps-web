@@ -20,7 +20,7 @@
             />
         </div>
         <div
-            class="absolute z-10 top-0 right-0 p-2 select-none cursor-pointer"
+            class="absolute z-10 top-0 right-0 p-2 select-none"
             @mouseover="showMenu"
             @mouseleave="hideMenu(0)"
         >
@@ -75,19 +75,19 @@
                             rounded-sm pointer-events-none"
                         />
                         <div class="relative px-0 block">
-                            <button class="btn btn-lg btn-blue font-normal mb-2 w-full">
+                            <button class="btn btn-lg btn-blue text-xl mb-2 w-full">
                                 Compile
                             </button>
                             <div class="btn-group divide-red-700 px-0 py-0">
-                                <button class="btn-red text-sm font-normal">
+                                <button class="btn-red text-sm">
                                     Clear Input
                                 </button>
-                                <button class="btn-red text-sm font-normal">
+                                <button class="btn-red text-sm">
                                     Clear Output
                                 </button>
                             </div>
                             <hr />
-                            <label>Input Mode</label>
+                            <label class="block mb-2">Input Mode</label>
                             <Toggle
                                 id="toggle-myps-mips"
                                 label="MYPS / MIPS"
@@ -96,7 +96,7 @@
                                 v-model="toggleMypsMips"
                             />
                             <hr />
-                            <label>Optimizer Options</label>
+                            <label class="block mb-2">Optimizer Options</label>
                             <Toggle
                                 id="toggle-optimize-registers"
                                 label="Optimize registers"

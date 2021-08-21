@@ -10,13 +10,13 @@ const routes = [
         path: '/',
         name: 'Editor',
         component: Editor,
-        meta: { transitionName: 'fade' }
+        meta: { transitionName: 'fade-slide-left' }
     },
     {
         path: '/about',
         name: 'About',
         component: About,
-        meta: { transitionName: 'fade' }
+        meta: { transitionName: 'fade-slide-right' }
     },
     {
         path: '/:pathMatch(.*)*',
@@ -34,15 +34,15 @@ const createAppRouter = (scrollWaiter) => {
             // const behavior = smoothScroll.value ? 'smooth' : 'auto'
             const behavior = 'auto'
 
-            if (savedPosition) {
-                return { ...savedPosition, behavior }
-            } else {
-                let position = undefined
-                if (to.hash) {
-                    position = { el: to.hash, behavior }
-                }
+            // if (savedPosition) {
+            //     return { ...savedPosition, behavior }
+            // } else {
+                let position = { top: 0, behavior }
+                // if (to.hash) {
+                //     position.el = to.hash
+                // }
                 return position
-            }
+            // }
         }
     })
 }

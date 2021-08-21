@@ -6,6 +6,11 @@ module.exports = {
         './src/**/*.{vue,js,ts,jsx,tsx}'
     ],
     darkMode: 'media',
+    variants: {
+        extend: {
+            margin: ['first', 'last']
+        }
+    },
     theme: {
         colors: {
             gray: colors.coolGray,
@@ -17,7 +22,20 @@ module.exports = {
             transparent: colors.transparent
         },
         extend: {
+            scale: {
+                '5': '.05',
+                '105': '1.05'
+            },
             spacing: {
+                    '1e':   '0.25em',
+                    '2e':   '0.50em',
+                    '3e':   '0.75em',
+                    '4e':   '1.00em',
+                    '5e':   '1.25em',
+                    '6e':   '1.50em',
+                    '7e':   '1.75em',
+                    '8e':   '2.k0em',
+
                      'w':    '100vw',
                   '1/2w':     '50vw',
                   '1/3w': '33.333vw',

@@ -1,14 +1,17 @@
 <template>
     <template v-if="rhs">
-        <div class="relative my-4 grid grid-cols-2 auto-rows-auto">
-            <pre
-                ref="lhs"
-                class="border-r border-gray-500 select-all"
-                v-highlightjs="lhs"
-            ><code class="myps h-full rounded-l-lg shadow-lg" /></pre>
+        <div class="example relative">
+            <div class="grid grid-cols-2 auto-rows-auto divide-x divide-gray-600">
+                <highlightjs
+                    :code="lhs"
+                />
+                <highlightjs
+                    :code="rhs"
+                />
+            </div>
             <router-link
                 :to="{ name: 'Editor', hash: '#abc' }"
-                class="absolute top-0 right-1/2 mx-2 my-1 text-gray-500 fill-current"
+                class="absolute top-0 right-1/2 text-sm my-3e mx-2 text-gray-500 fill-current"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -25,19 +28,14 @@
                     />
                 </svg>
             </router-link>
-            <pre
-                ref="rhs"
-                v-highlightjs="rhs"
-            ><code class="mips h-full rounded-r-lg shadow-lg select-all" /></pre>
         </div>
     </template>
     <template v-else>
         <div>
-            <pre
-                ref="lhs"
+            <highlightjs
                 class="w-1/2 mx-auto"
-                v-highlightjs="lhs"
-            ><code class="myps rounded-lg shadow-lg select-all"></code></pre>
+                :code="lhs"
+            />
         </div>
     </template>
 </template>
@@ -68,3 +66,20 @@ export default {
     },
 }
 </script>
+
+<style lang="postcss">
+.example {
+    @apply my-4;
+}
+pre {
+    .hljs {
+        @apply h-full select-all;
+    }
+    &:first-child .hljs {
+        @apply rounded-l-lg;
+    }
+    &:last-child .hljs {
+        @apply rounded-r-lg;
+    }
+}
+</style>

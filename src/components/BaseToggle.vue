@@ -50,29 +50,29 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-    .toggle {
-        @apply inline-flex items-center cursor-pointer;
-    }
-    .toggle-bg {
-        @apply block w-10 h-6 rounded-full bg-gray-400 shadow-inner;
-    }
-    .toggle-button {
-        @apply absolute bg-white block w-4 h-4 mt-1 ml-1 rounded-full shadow
-            inset-y-0 left-0 transition-transform duration-300 ease-in-out bg-white;
-    }
-    .toggle:hover .toggle-button {
-        @apply ring;
-    }
-    .toggle-button.on {
-        @apply bg-blue-500 transform translate-x-full;
-    }
-    .toggle-button.same-color.off {
-        @apply bg-blue-500;
-    }
-    .toggle-input {
-        @apply absolute opacity-0 w-0 h-0;
-    }
-    .toggle-label {
-        @apply ml-3 text-sm whitespace-nowrap;
-    }
+.toggle {
+    @apply inline-flex items-center cursor-pointer;
+}
+.toggle-bg {
+    @apply block w-10 h-6 rounded-full bg-gray-400 shadow-inner;
+}
+.toggle-button {
+    @apply absolute bg-white block w-4 h-4 mt-1 ml-1 rounded-full shadow
+        inset-y-0 left-0 transition-transform duration-300 ease-in-out bg-white;
+}
+.toggle:hover .toggle-button {
+    @apply ring;
+}
+.toggle-button.on {
+    @apply bg-blue-500 transform translate-x-full;
+}
+.toggle-button.same-color.off {
+    @apply bg-blue-500;
+}
+.toggle-input {
+    @apply absolute opacity-0 w-0 h-0;
+}
+.toggle-label {
+    @apply ml-3 text-sm whitespace-nowrap;
+}
 </style>
