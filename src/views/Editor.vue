@@ -51,15 +51,16 @@ import CodeMirror from '@components/EditorCodeMirror.vue'
 import Menu from '@components/EditorMenu.vue'
 import Modal from '@components/BaseModal.vue'
 
-const jsscompress = await import('js-string-compression');
-const compressor = new jsscompress.Hauffman();
+const jsscompress = await import('js-string-compression')
+const compressor = new jsscompress.Hauffman()
 
 const betterTab = (cm) => {
     if (cm.somethingSelected()) {
-        cm.indentSelection("add");
+        cm.indentSelection("add")
     } else {
-        cm.replaceSelection(cm.getOption("indentWithTabs")? "\t":
-                Array(cm.getOption("indentUnit") + 3).join(" "), "end", "+input");
+        cm.replaceSelection(
+            cm.getOption("indentWithTabs") ?
+                "\t": Array(cm.getOption("indentUnit") + 3).join(" "), "end", "+input")
     }
 }
 
@@ -89,6 +90,8 @@ export default {
     },
     data() {
         return {
+            wasm: import('/wasm/pkg'),
+
             inputEditor: null,
             outputEditor: null,
 
@@ -113,54 +116,76 @@ export default {
         this.inputEditor = this.$refs.inputEditor
         this.outputEditor = this.$refs.outputEditor
     },
-    beforeRouteEnter(to, from, next) {
+    beforeRouteEnter(to, _, next) {
         if (to.hash) {
-            next({ hash: '' })
+            console.log('before editor route enter (with hash)')
+            next({ ...to, hash: '' })
         } else if (to.redirectedFrom) {
-            const hash = to.redirectedFrom.hash.substr(1)
-            next(vm => {
-                vm.inputEditor.setValue(vm.decompress(hash))
-            })
+            const hash = to.redirectedFrom.hash
+            console.log(`before editor route enter (redirected with hash "${hash}")`)
+            next(vm => vm.trySetInputFromHash(hash))
         } else {
+            console.log('before editor route enter (other)')
             next()
         }
     },
-    beforeRouteUpdate(to, from) {
-        let value = ''
-        if (to.hash) {
-            const hash = to.hash.substr(1).trim()
-            value = this.decompress(hash)
-        }
-        this.inputEditor.setValue(value)
+    beforeRouteUpdate(to, _) {
+        console.log('before editor route update')
+        this.trySetInputFromHash(to.hash)
         return { hash: '' }
     },
     methods: {
         compress(s) {
-            return btoa(compressor.compress(s))
+            return window.btoa(compressor.compress(s))
         },
         decompress(s) {
-            return compressor.decompress(atob(s))
+            return compressor.decompress(window.atob(s))
         },
         setInput(value) {
             this.inputEditor.setValue(value)
         },
+        trySetInputFromHash(hash) {
+            if (hash) {
+                try {
+                    const value = this.decompress(hash.substr(1)).trimEnd()
+                    console.log(value)
+                    this.inputEditor.setValue(value)
+                } catch (error) {
+                    console.debug(`Invalid hash, error: "${error}"`)
+                }
+            }
+        },
         setOutput(value) {
             this.outputEditor.setValue(value)
         },
-        compile() {
-            /* const value = this.inputEditor.getValue(); */
+        async compile() {
+            if (!this.inputEditor.isClean()) {
+                const output = (await this.wasm).translate_myps(
+                    this.inputEditor.getValue(),
+                    this.menuData.optimizeRegisters,
+                    this.menuData.removeComments,
+                    this.menuData.removeEmptyLines,
+                    false, // removeEmptyComments
+                    this.menuData.replaceRegisterAliases,
+                    this.menuData.replaceDeviceAliases,
+                    this.menuData.replaceDefinitions,
+                    this.menuData.replaceLineTags
+                )
+                console.log(output)
+                this.inputEditor.markClean()
+            }
         },
         async share() {
             if (!this.inputEditor.isClean()) {
                 const value = this.inputEditor.getValue()
                 this.shareUrl = window.location.href
                 if (value) {
-                    this.shareUrl += '#' + this.compress(value)
+                    this.shareUrl += '#' + this.compress(value.trimEnd())
                 }
             }
             this.shareClean = true
             this.menu.forceHide()
-            this.modalShow = true;
+            this.modalShow = true
 
             // TODO: Might want to copy to clipboard? Modal is okay though
             /* if (!navigator.clipboard) { */
@@ -169,7 +194,7 @@ export default {
             /* try { */
             /*     const v = this.inputValue */
             /*     await navigator.clipboard.writeText(v) */
-            /*     const compressed = this.compress(v.trim()); */
+            /*     const compressed = this.compress(v.trim()) */
             /*     window.alert(compressed) */
             /*     /1* console.debug(compressed) *1/ */
             /* } catch(err) { */
@@ -180,7 +205,7 @@ export default {
     },
     watch: {
         /* inputValue() { */
-        /*     this.shareClean = false; */
+        /*     this.shareClean = false */
         /* }, */
         /* outputValue() { */
         /*     /1* console.debug(`output value changed to "${this.outputValue}"`) *1/ */

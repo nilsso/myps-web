@@ -33,6 +33,9 @@
 <script>
 import '@css/base.css'
 
+const jsscompress = await import('js-string-compression');
+const compressor = new jsscompress.Hauffman();
+
 export default {
     name: 'App',
     components: [ 'BaseButton' ],
@@ -51,7 +54,9 @@ export default {
         },
         flushWaiter() {
             this.scrollWaiter.flush()
-        }
+        },
+        compress: s => compressor.compress(s),
+        decompress: s => compressor.decompress(s)
     }
 }
 </script>
