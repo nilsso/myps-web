@@ -10,13 +10,13 @@ const routes = [
         path: '/',
         name: 'Editor',
         component: Editor,
-        meta: { transitionName: 'fade-slide-left' }
+        meta: { transitionName: 'fade' }
     },
     {
         path: '/about',
         name: 'About',
         component: About,
-        meta: { transitionName: 'fade-slide-right' }
+        meta: { transitionName: 'fade' }
     },
     {
         path: '/:pathMatch(.*)*',

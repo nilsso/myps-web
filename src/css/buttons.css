@@ -1,0 +1,136 @@
+@layer components {
+    :root {
+        --btn-normal: theme(colors.gray.500);
+        --btn-hover:  theme(colors.gray.600);
+        --btn-active: theme(colors.gray.700);
+    }
+
+    .btn {
+        @apply relative text-center p-2e rounded;
+        color: theme(colors.white);
+        background-color: var(--btn-normal);
+        line-height: 1 !important;
+        &:focus {
+            @apply ring-2 ring-blue-500;
+        }
+        &:hover {
+            background-color: var(--btn-hover);
+        }
+        &:active {
+            background-color: var(--btn-active);
+        }
+        &:disabled {
+            background-color: var(--btn-active);
+            &::before {
+                @apply absolute inset-0 w-full h-full bg-gray-500 bg-opacity-50;
+                border-radius: inherit;
+                content: "";
+            }
+        }
+    }
+    .btn-inv {
+        @apply relative text-center p-2e rounded ring-2 ring-inset;
+        --tw-ring-color: var(--btn-normal);
+        color: var(--btn-normal);
+        background-color: theme(colors.white);
+        line-height: 1 !important;
+        &:focus {
+            @apply ring-2 ring-blue-500;
+        }
+        &:hover {
+            --tw-ring-color: var(--btn-hover);
+            color: var(--btn-hover);
+        }
+        &:active {
+            --tw-ring-color: var(--btn-active);
+            color: var(--btn-active);
+        }
+        &:disabled {
+            --tw-ring-color: var(--btn-active);
+            color: var(--btn-active);
+            &::before {
+                @apply absolute inset-0 w-full h-full bg-gray-500 bg-opacity-50;
+                border-radius: inherit;
+                content: "";
+            }
+        }
+    }
+    .btn-blue {
+        --btn-normal: theme(colors.blue.500);
+        --btn-hover:  theme(colors.blue.600);
+        --btn-active: theme(colors.blue.700);
+        @extend .btn;
+    }
+    .btn-blue-inv {
+        --btn-normal: theme(colors.blue.500);
+        --btn-hover:  theme(colors.blue.600);
+        --btn-active: theme(colors.blue.700);
+        @extend .btn-inv;
+    }
+    .btn-red {
+        --btn-normal: theme(colors.red.500);
+        --btn-hover:  theme(colors.red.600);
+        --btn-active: theme(colors.red.700);
+        @extend .btn;
+    }
+    .btn-red-inv {
+        --btn-normal: theme(colors.red.500);
+        --btn-hover:  theme(colors.red.600);
+        --btn-active: theme(colors.red.700);
+        @extend .btn-inv;
+    }
+    .btn-yellow {
+        --btn-normal: theme(colors.yellow.500);
+        --btn-hover:  theme(colors.yellow.600);
+        --btn-active: theme(colors.yellow.700);
+        @extend .btn;
+    }
+    .btn-yellow-inv {
+        --btn-normal: theme(colors.yellow.500);
+        --btn-hover:  theme(colors.yellow.600);
+        --btn-active: theme(colors.yellow.700);
+        @extend .btn-inv;
+    }
+    .btn-group {
+        @apply grid grid-cols-2 auto-rows-auto divide-x;
+
+        .btn {
+            &:first-child {
+                @apply rounded-r-none;
+            }
+            &:last-child {
+                @apply rounded-l-none;
+            }
+            &:only-child {
+                @apply rounded;
+            }
+        }
+    }
+    .btn-groups {
+        .btn-group {
+            .btn {
+                @apply rounded-none;
+            }
+            &:first-child {
+                .btn {
+                    &:first-child {
+                        @apply rounded-tl-lg;
+                    }
+                    &:last-child {
+                        @apply rounded-tr-lg;
+                    }
+                }
+            }
+            &:last-child {
+                .btn {
+                    &:first-child {
+                        @apply rounded-bl-lg;
+                    }
+                    &:last-child {
+                        @apply rounded-br-lg;
+                    }
+                }
+            }
+        }
+    }
+}

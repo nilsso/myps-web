@@ -2,7 +2,7 @@
     <div class="flex flex-col min-h-screen">
         <div class="nav sticky top-0 z-10 p-2 bg-white border-b border-gray-400">
             <router-link :to="{ name: 'Editor' }">
-                <button class="btn-blue text-xl mx-1">
+                <button class="btn-blue text-xl mr-1">
                     Editor
                 </button>
             </router-link>
@@ -11,7 +11,7 @@
                     About
                 </button>
             </router-link>
-            <button class="btn-inv text-xl mx-1">
+            <button class="btn-inv text-xl mx-1" disabled>
                 Github
             </button>
         </div>

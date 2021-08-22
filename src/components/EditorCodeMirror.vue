@@ -10,7 +10,7 @@ import 'codemirror/addon/fold/brace-fold'
 import 'codemirror/addon/fold/foldgutter'
 import 'codemirror/addon/fold/foldgutter.css'
 import 'codemirror/addon/display/placeholder'
-/* import 'codemirror/mode/javascript/javascript'; */
+/* import 'codemirror/mode/javascript/javascript' */
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/nord.css'
 
@@ -93,9 +93,12 @@ export default {
                     break
             }
         },
-        /* setValue(value) { */
-        /*     this.editor.setValue(value); */
-        /* }, */
+        getValue() {
+            return this.editor.getValue()
+        },
+        setValue(value) {
+            this.editor.setValue(value)
+        },
         setMode(mode) {
             this.mode = mode
         },
@@ -104,6 +107,9 @@ export default {
         },
         setPlaceholder(placeholder = this.placeholder) {
             this.placeholder = placeholder
+        },
+        setOption(key, value) {
+            this.editor.setOption(key, value)
         },
         isClean() {
             return this.editor.isClean()
@@ -160,10 +166,8 @@ export default {
         // Emit value change handeler
         editor.on('changes', () => {
             const value = this.editor.getValue()
-            console.debug(`editor value changed to "${value}"`)
             this.$emit('update:modelValue', value)
             this.updateEditorHeight()
-            // TODO: Height is bugged when auto and top-bottom are set
         })
 
         // Consider hooking other events (focus, blur)

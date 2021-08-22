@@ -1,20 +1,64 @@
-.fade-enter-active { @apply transition duration-200; }
-.fade-enter-from   { @apply opacity-0; }
-.fade-enter-to     { @apply opacity-100; }
-.fade-leave-active { @apply transition duration-200; }
-.fade-leave-from   { @apply opacity-100; }
-.fade-leave-to     { @apply opacity-0; }
+@layer utilities {
+    .fade-enter-active { @apply transition duration-200 ease-in-out; }
+    .fade-enter-from   { @apply opacity-0; }
+    .fade-enter-to     { @apply opacity-100; }
+    .fade-leave-active { @apply transition duration-200 ease-in-out; }
+    .fade-leave-from   { @apply opacity-100; }
+    .fade-leave-to     { @apply opacity-0; }
 
-.fade-slide-left-enter-active { @apply transition duration-300; }
-.fade-slide-left-enter-from   { @apply opacity-0 transform -translate-x-5; }
-.fade-slide-left-enter-to     { @apply opacity-100; }
-.fade-slide-left-leave-active { @apply transition duration-300; }
-.fade-slide-left-leave-from   { @apply opacity-100; }
-.fade-slide-left-leave-to     { @apply opacity-0 transform translate-x-5; }
+    .fade-slide-left-enter-active { @apply transition duration-300 ease-in-out; }
+    .fade-slide-left-enter-from   { @apply opacity-0 transform-gpu -translate-x-5; }
+    .fade-slide-left-enter-to     { @apply opacity-100; }
+    .fade-slide-left-leave-active { @apply transition duration-300 ease-in-out; }
+    .fade-slide-left-leave-from   { @apply opacity-100; }
+    .fade-slide-left-leave-to     { @apply opacity-0 transform-gpu translate-x-5; }
 
-.fade-slide-right-enter-active { @apply transition duration-300; }
-.fade-slide-right-enter-from   { @apply opacity-0 transform translate-x-5; }
-.fade-slide-right-enter-to     { @apply opacity-100; }
-.fade-slide-right-leave-active { @apply transition duration-300; }
-.fade-slide-right-leave-from   { @apply opacity-100; }
-.fade-slide-right-leave-to     { @apply opacity-0 transform -translate-x-5; }
+    .fade-slide-right-enter-active { @apply transition duration-300 ease-in-out; }
+    .fade-slide-right-enter-from   { @apply opacity-0 transform-gpu translate-x-5; }
+    .fade-slide-right-enter-to     { @apply opacity-100; }
+    .fade-slide-right-leave-active { @apply transition duration-300 ease-in-out; }
+    .fade-slide-right-leave-from   { @apply opacity-100; }
+    .fade-slide-right-leave-to     { @apply opacity-0 transform-gpu -translate-x-5; }
+
+    .fade-slide-left-right-enter-active { @apply transition duration-300 ease-in-out; }
+    .fade-slide-left-right-enter-from   { @apply opacity-0 transform-gpu -translate-x-5; }
+    .fade-slide-left-right-enter-to     { @apply opacity-100; }
+    .fade-slide-left-right-leave-active { @apply transition duration-300 ease-in-out; }
+    .fade-slide-left-right-leave-from   { @apply opacity-100; }
+    .fade-slide-left-right-leave-to     { @apply opacity-0 transform-gpu translate-x-5; }
+
+    .fade-grow-enter-active { @apply transition duration-150 ease-in-out transform; }
+    .fade-grow-enter-from   { @apply scale-95 opacity-0; }
+    .fade-grow-enter-to     { @apply scale-100 opacity-100; }
+    .fade-grow-leave-active { @apply transition duration-150 ease-in-out transform; }
+    .fade-grow-leave-from   { @apply scale-100 opacity-100; }
+    .fade-grow-leave-to     { @apply scale-95 opacity-0; }
+
+    .fade-grow-top-enter-active { @apply transition duration-150 ease-in-out transform; }
+    .fade-grow-top-enter-from   { @apply -translate-y-5 scale-95 opacity-0; }
+    .fade-grow-top-enter-to     { @apply translate-y-0 scale-100 opacity-100; }
+    .fade-grow-top-leave-active { @apply transition duration-150 ease-in transform; }
+    .fade-grow-top-leave-from   { @apply translate-y-0 scale-100 opacity-100; }
+    .fade-grow-top-leave-to     { @apply -translate-y-5 scale-95 opacity-0; }
+
+    .fade-grow-right-enter-active { @apply transition duration-150 ease-in-out transform; }
+    .fade-grow-right-enter-from   { @apply translate-x-5 scale-95 opacity-0; }
+    .fade-grow-right-enter-to     { @apply translate-x-0 scale-100 opacity-100; }
+    .fade-grow-right-leave-active { @apply transition duration-150 ease-in transform; }
+    .fade-grow-right-leave-from   { @apply translate-x-0 scale-100 opacity-100; }
+    .fade-grow-right-leave-to     { @apply translate-x-5 scale-95 opacity-0; }
+
+    .fade-grow-bottom-enter-active { @apply transition duration-150 ease-in-out transform; }
+    .fade-grow-bottom-enter-from   { @apply translate-y-5 scale-95 opacity-0; }
+    .fade-grow-bottom-enter-to     { @apply translate-y-0 scale-100 opacity-100; }
+    .fade-grow-bottom-leave-active { @apply transition duration-150 ease-in transform; }
+    .fade-grow-bottom-leave-from   { @apply translate-y-0 scale-100 opacity-100; }
+    .fade-grow-bottom-leave-to     { @apply translate-y-5 scale-95 opacity-0; }
+
+    .fade-grow-left-enter-active { @apply transition duration-150 ease-in-out transform; }
+    .fade-grow-left-enter-from   { @apply -translate-x-5 scale-95 opacity-0; }
+    .fade-grow-left-enter-to     { @apply translate-x-0 scale-100 opacity-100; }
+    .fade-grow-left-leave-active { @apply transition duration-150 ease-in transform; }
+    .fade-grow-left-leave-from   { @apply translate-x-0 scale-100 opacity-100; }
+    .fade-grow-left-leave-to     { @apply -translate-x-5 scale-95 opacity-0; }
+}

@@ -1,6 +1,7 @@
+@import '@css/buttons.css';
+@import '@css/transitions.css';
+
 @tailwind base;
-@tailwind components;
-@tailwind utilities;
 
 /* const btnSized = (mixin, size) { */
 /*     '.btn-' + size: { */
@@ -73,89 +74,10 @@
     hr {
         @apply my-2;
     }
-    code {
+    code, pre, kbd {
         @apply text-sm;
     }
 }
 
-@layer components {
-    .btn {
-        @apply text-white bg-gray-500 text-center px-2e py-1e rounded;
-        line-height: 1 !important;
-        &:hover {
-            @apply bg-gray-700;
-        }
-    }
-    .btn-inv {
-        @extend .btn;
-        @apply text-gray-500 bg-white ring-gray-500 ring-2 ring-inset;
-        &:hover {
-            @apply text-gray-700 bg-white ring-gray-700;
-        }
-    }
-    .btn-red {
-        @extend .btn;
-        @apply bg-red-500;
-        &:hover {
-            @apply bg-red-700;
-        }
-    }
-    .btn-red-inv {
-        @extend .btn-inv;
-        @apply text-red-500 ring-red-500;
-        &:hover {
-            @apply text-red-700 ring-red-700;
-        }
-    }
-    .btn-blue {
-        @extend .btn;
-        @apply bg-blue-500;
-        &:hover {
-            @apply bg-blue-700;
-        }
-    }
-    .btn-blue-inv {
-        @extend .btn-inv;
-        @apply text-blue-500 ring-blue-500;
-        &:hover {
-            @apply text-blue-700 ring-blue-700;
-        }
-    }
-    .btn-group {
-        @apply grid grid-cols-2 auto-rows-auto divide-x divide-gray-700;
-
-        .btn:first-child {
-            @apply rounded-r-none;
-        }
-        .btn:last-child {
-            @apply rounded-l-none;
-        }
-        .btn:only-child {
-            @apply rounded;
-        }
-    }
-}
-
-@layer utilities {
-    /* @import '@css/transitions' */
-    .fade-enter-active { @apply transition duration-200; }
-    .fade-enter-from   { @apply opacity-0; }
-    .fade-enter-to     { @apply opacity-100; }
-    .fade-leave-active { @apply transition duration-200; }
-    .fade-leave-from   { @apply opacity-100; }
-    .fade-leave-to     { @apply opacity-0; }
-
-    .fade-slide-left-enter-active { @apply transition duration-300; }
-    .fade-slide-left-enter-from   { @apply opacity-0 transform-gpu -translate-x-5; }
-    .fade-slide-left-enter-to     { @apply opacity-100; }
-    .fade-slide-left-leave-active { @apply transition duration-300; }
-    .fade-slide-left-leave-from   { @apply opacity-100; }
-    .fade-slide-left-leave-to     { @apply opacity-0 transform-gpu translate-x-5; }
-
-    .fade-slide-right-enter-active { @apply transition duration-300; }
-    .fade-slide-right-enter-from   { @apply opacity-0 transform-gpu translate-x-5; }
-    .fade-slide-right-enter-to     { @apply opacity-100; }
-    .fade-slide-right-leave-active { @apply transition duration-300; }
-    .fade-slide-right-leave-from   { @apply opacity-100; }
-    .fade-slide-right-leave-to     { @apply opacity-0 transform-gpu -translate-x-5; }
-}
+@tailwind components;
+@tailwind utilities;
