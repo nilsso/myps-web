@@ -1,5 +1,8 @@
 <template>
-    <div ref="editor" :style="{ height: editorHeight }" />
+    <div
+        ref="editor"
+        :style="{ height: editorHeight }"
+    />
 </template>
 
 <script>
@@ -25,8 +28,8 @@ const DEFAULT_OPTIONS = {
 }
 
 export default {
-    name: 'CodeMirror',
-    emits: [ 'update:modelValue' ],
+    name: 'VueCodeMirror',
+    emits: [ 'update:modelValue', 'changed' ],
     props: {
         modelValue: {
             type: String,
@@ -79,19 +82,6 @@ export default {
         },
         setEditorHeight(height) {
             this.editorHeight = height
-        },
-        updateEditorHeight() {
-            switch (this.height) {
-                case 'auto':
-                    break
-                case 'lines':
-                    const h = ((this.editor.lineCount() * 19.5) + 8)
-                    this.editorHeight = h + 'px'
-                    break
-                default:
-                    this.setEditorHeight(this.editorHeight = this.height)
-                    break
-            }
         },
         getValue() {
             return this.editor.getValue()
@@ -148,27 +138,24 @@ export default {
             placeholder: this.placeholder,
             readOnly: this.readonly,
             lineWrapping: this.wrap,
-        }
+        };
 
         const options = {
             ...DEFAULT_OPTIONS,
             ...Object.fromEntries(Object.entries(propOptions).filter(([_, v]) => !!(v))),
-            ...this.options
-        }
+            ...this.options,
+        };
 
-        const container = this.container = this.$refs.editor
+        const container = this.container = this.$refs.editor;
         const editor
             = container.editor
             = this.editor
-            = markRaw(CodeMirror(container, options))
-        this.sizer = container.getElementsByClassName('CodeMirror-sizer')[0]
+            = markRaw(CodeMirror(container, options));
+
+        this.sizer = container.getElementsByClassName('CodeMirror-sizer')[0];
 
         // Emit value change handeler
-        editor.on('changes', () => {
-            const value = this.editor.getValue()
-            this.$emit('update:modelValue', value)
-            this.updateEditorHeight()
-        })
+        editor.on('changes', () => this.$emit('changed'));
 
         // Consider hooking other events (focus, blur)
 
@@ -176,15 +163,13 @@ export default {
         const ro = editor.ro = new ResizeObserver(entries => {
         /* const ro = editor.ro = new ResizeObserver(function (entries) { */
             entries.forEach(entry => {
-                const editor = entry.target.editor
-                const { width, height } = entry.contentRect
-                editor.setSize(width, height)
-                editor.refresh()
-            })
-        })
-        ro.observe(container)
-
-        this.updateEditorHeight()
+                const editor = entry.target.editor;
+                const { width, height } = entry.contentRect;
+                editor.setSize(width, height);
+                editor.refresh();
+            });
+        });
+        ro.observe(container);
     },
 }
 </script>

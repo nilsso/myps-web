@@ -1,0 +1,21 @@
+{
+    "None": 0,
+    "Occupied": 1,
+    "OccupantHash": 2,
+    "Quantity": 3,
+    "Damage": 4,
+    "Efficiency": 5,
+    "Health": 6,
+    "Growth": 7,
+    "Pressure": 8,
+    "Temperature": 9,
+    "Charge": 10,
+    "ChargeRatio": 11,
+    "Class": 12,
+    "PressureWaste": 13,
+    "PressureAir": 14,
+    "MaxQuantity": 15,
+    "Mature": 16,
+    "PrefabHash": 17,
+    "Seeding": 18
+}

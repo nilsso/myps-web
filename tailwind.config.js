@@ -3,14 +3,16 @@ const colors = require('tailwindcss/colors')
 module.exports = {
     purge: [
         './index.html',
-        './src/**/*.{vue,js,ts,jsx,tsx}'
+        './src/**/*.{vue,js,ts,jsx,tsx}',
     ],
     darkMode: 'media',
     variants: {
         extend: {
             margin: ['first', 'last'],
-            display: ['hover', 'group-hover']
-        }
+            display: ['hover', 'group-hover'],
+            cursor: ['disabled'],
+            pointerEvents: ['disabled'],
+        },
     },
     theme: {
         colors: {
@@ -21,7 +23,7 @@ module.exports = {
             green: colors.emerald,
             blue: colors.blue,
             yellow: colors.amber,
-            transparent: colors.transparent
+            transparent: colors.transparent,
         },
         fontSize: {
             'xs':     '.75em',
@@ -35,12 +37,12 @@ module.exports = {
             '4xl':   '2.25em',
             '5xl':      '3em',
             '6xl':      '4em',
-            '7xl':      '5em'
+            '7xl':      '5em',
         },
         extend: {
             scale: {
                 '5': '.05',
-                '105': '1.05'
+                '105': '1.05',
             },
             spacing: {
                     '1e':   '0.25em',
@@ -109,11 +111,11 @@ module.exports = {
                  '9/12h':     '75vh',
                 '10/12h': '83.333vh',
                 '11/12h': '91.667vh',
-            }
-        }
+            },
+        },
         // fontFamily: {
         //     sans: ['Graphik', 'sans-serif'],
         //     serif: ['Merriweather', 'serif']
         // }
-    }
+    },
 }

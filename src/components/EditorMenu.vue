@@ -97,6 +97,11 @@
                             v-model="modelValue.removeEmptyLines"
                         />
                         <Toggle
+                            id="remove-empty-comments"
+                            label="Remove empty comments"
+                            v-model="modelValue.removeEmptyComments"
+                        />
+                        <Toggle
                             id="replace-definitions"
                             label="Replace definitions"
                             v-model="modelValue.replaceDefinitions"

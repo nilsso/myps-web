@@ -25,20 +25,18 @@
         binary for use in this Javascript Vue web application. All in all, it's been a lot to learn,
         I'm very satisfied with the results, and yet there's plenty more to be improved.</p>
 
-        <hr />
-
         <!--<Header id="what-this-app-does"><h1>What this app does</h1></Header>-->
-        ## What this app does
+        <h2>What this app does</h2>
 
         <p>Within the editor tab, provide a source MYPS program and click compile (or hit
         shift-enter) to get back the translated MIPS source code for the MYPS input. Various
-        translation optimizations are included at below the editor. These selctions as well as the
-        input and output source code are saved in the URL hash for sharing or reopenning later.</p>
+        translation optimizations are included at below the editor. These selections as well as the
+        input and output source code are saved in the URL hash for sharing or re-opening later.</p>
 
         <p><strong>As of writing there is not proper error management within the library itself, so
         the editor is entirely lacking in reporting what is going wrong. At the very least you can
-        <em>see</em> that something went wrong, but I'll eventually include propper error messages
-        on top of proper text editing areas (both are no-frills text-areas for now).</strong></p>
+        <em>see</em> that something went wrong, but an entire re-write of error handling within the
+        MIPS AST, MYPS AST, and AST translator libraries is needed.</strong></p>
 
         <hr />
 
@@ -748,7 +746,7 @@ j 2
             <Example>
                 <template>
 <pre>
-fix a = 0 # fixed initialzation
+fix a = 0 # fixed initialization
 j(AssignACalcB)
 tag CalcC:
     c = a * 2
@@ -816,28 +814,12 @@ j 1
 
 <script>
 /* import { h } from 'vue' */
-import Example from '@components/AboutExample.vue'
-import HeaderTag from '@components/BaseHeaderTag.vue'
-/* const HeaderTag = { */
-/*     name: 'HeaderTag', */
-/*     render: function() { */
-/*         return h('h' + this.level, {}, this.$slots.default()) */
-/*     }, */
-/*     props: { */
-/*         level: { */
-/*             type: Number, */
-/*             required: true */
-/*         }, */
-/*         id: { */
-/*             type: String, */
-/*             default: '' */
-/*         } */
-/*     } */
-/* } */
+import Example from '@components/AboutExample.vue';
+import HeaderTag from '@components/BaseHeaderTag.vue';
 
 export default {
     name: 'About',
-    components: { Example, HeaderTag }
+    components: { Example, HeaderTag, },
 }
 </script>
 

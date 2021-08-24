@@ -17,6 +17,35 @@ pub fn hello() -> String {
 }
 
 #[wasm_bindgen]
+pub fn optimize_mips(
+    source: String,
+    optimize_registers: bool,
+    remove_comments: bool,
+    remove_empty: bool,
+    remove_empty_comments: bool,
+    replace_alias_reg: bool,
+    replace_alias_dev: bool,
+    replace_defines: bool,
+    replace_tags: bool,
+) -> String {
+    let mut mips = mips::Mips::lex_source(&source).unwrap();
+
+    let config = OptimizationConfig {
+        optimize_registers,
+        remove_comments,
+        remove_empty,
+        remove_empty_comments,
+        remove_reg_aliases: replace_alias_reg,
+        remove_dev_aliases: replace_alias_dev,
+        remove_defines: replace_defines,
+        remove_tags: replace_tags,
+    };
+
+    mips.optimize(config).unwrap();
+    join(mips.lines.into_iter(), "\n")
+}
+
+#[wasm_bindgen]
 pub fn translate_myps(
     source: String,
     optimize_registers: bool,

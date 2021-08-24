@@ -1,19 +1,29 @@
 <template>
     <div class="relative flex flex-col bg-gray-300">
-        <div class="flex-1 relative z-10 divide-y sm:divide-y-0 sm:divide-x divide-gray-500">
-            <CodeMirror
+        <!-- overlay -->
+        <div
+            :class="[
+                'absolute inset-0 pointer-events-none z-10',
+                compileError ? 'ring-2 ring-red-500 ring-inset' : '',
+            ]"
+        />
+        <div class="flex-1 relative divide-y sm:divide-y-0 sm:divide-x divide-gray-500">
+            <!-- input editor -->
+            <VueCodeMirror
                 ref="inputEditor"
                 class="absolute left-0 right-0 top-0 bottom-1/2 sm:left-0 sm:right-1/2 sm:top-0 sm:bottom-0"
                 :modelValue="inputValue"
                 :options="inputEditorOptions"
                 :placeholder="menuData.toggleMypsMips ? 'MIPS input' : 'MYPS input'"
-                :mode="menuData.toggleMypsMips ? 'myps' : 'mips'"
+                :mode="menuData.toggleMypsMips ? 'mips' : 'python'"
                 @keydown.shift.enter.prevent="compile"
+                @changed="inputChanged"
             />
-            <CodeMirror
+            <!-- output editor -->
+            <VueCodeMirror
                 ref="outputEditor"
                 class="absolute left-0 right-0 top-1/2 bottom-0 sm:left-1/2 sm:right-0 sm:top-0 sm:bottom-0"
-                readonly="nocursor"
+                readonly
                 placeholder="Optimized MIPS output"
                 :modelValue="outputValue"
                 :options="outputEditorOptions"
@@ -47,51 +57,62 @@
 </template>
 
 <script>
-import CodeMirror from '@components/EditorCodeMirror.vue'
-import Menu from '@components/EditorMenu.vue'
-import Modal from '@components/BaseModal.vue'
+import VueCodeMirror from '@components/VueCodeMirror.vue';
+import Menu from '@components/EditorMenu.vue';
+import Modal from '@components/BaseModal.vue';
 
-const jsscompress = await import('js-string-compression')
-const compressor = new jsscompress.Hauffman()
+import CodeMirror from 'codemirror';
+import 'codemirror/addon/mode/simple.js';
+import 'codemirror/addon/comment/comment.js';
+import 'codemirror/mode/python/python.js';
+import '@assets/codemirror/modes/mips.js';
+/* import '@assets/codemirror/modes/myps.js'; */
+/* CodeMirror.defineMode('mips', mipsMode); */
 
 const betterTab = (cm) => {
     if (cm.somethingSelected()) {
-        cm.indentSelection("add")
+        cm.indentSelection("add");
     } else {
-        cm.replaceSelection(
-            cm.getOption("indentWithTabs") ?
-                "\t": Array(cm.getOption("indentUnit") + 3).join(" "), "end", "+input")
+        const spaces = () => Array(cm.getOption("indentUnit") + 1).join(" ");
+        const tabs = cm.getOption("indentWithTabs");
+        cm.replaceSelection(tabs ? "\t" : spaces(), "end", "+input");
     }
-}
+};
 
 const defaultEditorOptions = {
     lineNumberFormatter: (n) => n - 1,
     matchBrackets: true,
-    extraKeys: { Tab: betterTab }
-}
+    extraKeys: {
+        Tab: betterTab,
+        'Cmd-/': cm => cm.toggleComment(),
+    },
+    indentUnit: 4,
+};
 
 const defaultMenuData = {
     toggleMypsMips: false,
     optimizeRegisters: true,
     removeComments: false,
     removeEmptyLines: true,
+    removeEmptyComments: true,
     replaceDefinitions: true,
     replaceRegisterAliases: true,
     replaceDeviceAliases: true,
-    replaceLineTags: true
-}
+    replaceLineTags: true,
+};
+
+import init, { optimize_mips, translate_myps } from 'wasm/myps-mips';
+init();
 
 export default {
     name: 'Editor',
     components: {
-        CodeMirror,
+        VueCodeMirror,
         Menu,
-        Modal
+        Modal,
     },
     data() {
         return {
-            wasm: import('/wasm/pkg'),
-
             inputEditor: null,
             outputEditor: null,
 
@@ -102,90 +123,104 @@ export default {
 
             inputEditorOptions: { ...defaultEditorOptions },
             outputEditorOptions: { ...defaultEditorOptions, mode: 'mips' },
+            compileError: false,
+
             menuData: { ...defaultMenuData },
             shareClean: false,
             shareUrl: window.location.href,
 
             modalShow: false,
             modalContent: 'Hello hello',
-            modalKind: 'message'
+            modalKind: 'message',
         }
     },
     mounted() {
-        this.menu = this.$refs.menu
-        this.inputEditor = this.$refs.inputEditor
-        this.outputEditor = this.$refs.outputEditor
+        this.menu = this.$refs.menu;
+        this.inputEditor = this.$refs.inputEditor;
+        this.outputEditor = this.$refs.outputEditor;
     },
     beforeRouteEnter(to, _, next) {
         if (to.hash) {
-            console.log('before editor route enter (with hash)')
-            next({ ...to, hash: '' })
+            console.log('before editor route enter (with hash)');
+            next({ ...to, hash: '' });
         } else if (to.redirectedFrom) {
-            const hash = to.redirectedFrom.hash
-            console.log(`before editor route enter (redirected with hash "${hash}")`)
-            next(vm => vm.trySetInputFromHash(hash))
+            const hash = to.redirectedFrom.hash;
+            console.log(`before editor route enter (redirected with hash "${hash}")`);
+            next(vm => vm.trySetInputFromHash(hash));
         } else {
-            console.log('before editor route enter (other)')
-            next()
+            console.log('before editor route enter (other)');
+            next();
         }
     },
     beforeRouteUpdate(to, _) {
-        console.log('before editor route update')
-        this.trySetInputFromHash(to.hash)
-        return { hash: '' }
+        console.log('before editor route update');
+        this.trySetInputFromHash(to.hash);
+        return { hash: '' };
+    },
+    watch: {
+        inputValue() {
+            console.debug('input changed');
+        },
+        /* outputValue() { */
+        /* }, */
     },
     methods: {
-        compress(s) {
-            return window.btoa(compressor.compress(s))
-        },
-        decompress(s) {
-            return compressor.decompress(window.atob(s))
+        inputChanged() {
+            this.compileError = false;
         },
         setInput(value) {
-            this.inputEditor.setValue(value)
+            this.inputEditor.setValue(value);
         },
         trySetInputFromHash(hash) {
             if (hash) {
                 try {
-                    const value = this.decompress(hash.substr(1)).trimEnd()
-                    console.log(value)
-                    this.inputEditor.setValue(value)
+                    const value = this.$root.decompress(hash.substr(1));
+                    this.inputEditor.setValue(value.trimEnd());
                 } catch (error) {
-                    console.debug(`Invalid hash, error: "${error}"`)
+                    console.debug(`Invalid hash, error: "${error}"`);
                 }
             }
         },
         setOutput(value) {
-            this.outputEditor.setValue(value)
+            this.outputEditor.setValue(value);
         },
-        async compile() {
-            if (!this.inputEditor.isClean()) {
-                const output = (await this.wasm).translate_myps(
-                    this.inputEditor.getValue(),
-                    this.menuData.optimizeRegisters,
-                    this.menuData.removeComments,
-                    this.menuData.removeEmptyLines,
-                    false, // removeEmptyComments
-                    this.menuData.replaceRegisterAliases,
-                    this.menuData.replaceDeviceAliases,
-                    this.menuData.replaceDefinitions,
-                    this.menuData.replaceLineTags
-                )
-                console.log(output)
-                this.inputEditor.markClean()
-            }
+        // TODO: This should be async, and block further compile attempts
+        compile() {
+            // TODO: Figure out how CodeMirror marks itself clean/unclean when copy-pasting
+            // and when setting the value from hash. Doesn't seem to marked dirty sometimes.
+            /* if (!this.inputEditor.isClean()) { */
+                try {
+                    const f = this.toggleMypsMips ? optimize_mips : translate_myps;
+                    const output = f(
+                        this.inputEditor.getValue(),
+                        this.menuData.optimizeRegisters,
+                        this.menuData.removeComments,
+                        this.menuData.removeEmptyLines,
+                        this.menuData.removeEmptyComments,
+                        this.menuData.replaceRegisterAliases,
+                        this.menuData.replaceDeviceAliases,
+                        this.menuData.replaceDefinitions,
+                        this.menuData.replaceLineTags,
+                    );
+                    this.inputEditor.markClean();
+                    this.compileError = false;
+                    this.outputEditor.setValue(output);
+                } catch (error) {
+                    console.debug(`Translator error: "${error}"`);
+                    this.compileError = true;
+                    this.outputEditor.setValue('');
+                }
+            /* } */
         },
         async share() {
-            if (!this.inputEditor.isClean()) {
-                const value = this.inputEditor.getValue()
-                this.shareUrl = window.location.href
-                if (value) {
-                    this.shareUrl += '#' + this.compress(value.trimEnd())
-                }
+            const value = this.inputEditor.getValue();
+            this.shareUrl = window.location.href;
+            if (value) {
+                this.shareUrl += '#' + this.$root.compress(value.trimEnd());
             }
-            this.shareClean = true
-            this.menu.forceHide()
-            this.modalShow = true
+            this.shareClean = true;
+            this.menu.forceHide();
+            this.modalShow = true;
 
             // TODO: Might want to copy to clipboard? Modal is okay though
             /* if (!navigator.clipboard) { */
@@ -203,13 +238,5 @@ export default {
             /* } */
         }
     },
-    watch: {
-        /* inputValue() { */
-        /*     this.shareClean = false */
-        /* }, */
-        /* outputValue() { */
-        /*     /1* console.debug(`output value changed to "${this.outputValue}"`) *1/ */
-        /* }, */
-    }
 }
 </script>

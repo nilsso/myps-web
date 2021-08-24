@@ -79,5 +79,17 @@
     }
 }
 
+@layer components {
+    /* .btn-blue.inf .router-link-active { */
+    /*     @extend .btn-blue; */
+    /* } */
+}
+
+@layer utilities {
+    .disabled {
+        @apply pointer-events-none;
+    }
+}
+
 @tailwind components;
 @tailwind utilities;

@@ -73,7 +73,7 @@ export default {
 
 <style lang="postcss" scoped>
     #modal-mask {
-        @apply absolute table inset-0 w-full h-full z-50 bg-black bg-opacity-50;
+        @apply absolute table table-fixed inset-0 w-screen h-screen z-50 bg-black bg-opacity-50;
     }
     #modal-wrapper {
         @apply table-cell align-middle;

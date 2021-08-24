@@ -1,19 +1,15 @@
 <template>
     <div class="flex flex-col min-h-screen">
         <div class="nav sticky top-0 z-10 p-2 bg-white border-b border-gray-400">
-            <router-link :to="{ name: 'Editor' }">
-                <button class="btn-blue text-xl mr-1">
-                    Editor
-                </button>
-            </router-link>
-            <router-link :to="{ name: 'About' }">
-                <button class="btn-blue-inv text-xl mx-1">
-                    About
-                </button>
-            </router-link>
-            <button class="btn-inv text-xl mx-1" disabled>
+            <AppLink :to="{ name: 'Editor' }" class="mr-1">
+                Editor
+            </AppLink>
+            <AppLink :to="{ name: 'About' }" class="mx-1">
+                About
+            </AppLink>
+            <AppLink to="https://github.com/nilsso" class="mx-1 disabled">
                 Github
-            </button>
+            </AppLink>
         </div>
         <router-view v-slot="{ Component, route }">
             <transition
@@ -31,32 +27,35 @@
 </template>
 
 <script>
-import '@css/base.css'
+import AppLink from '@components/AppLink.vue';
+import '@css/base.css';
 
-const jsscompress = await import('js-string-compression');
+const jsscompress = import('js-string-compression');
 const compressor = new jsscompress.Hauffman();
 
 export default {
-    name: 'App',
-    components: [ 'BaseButton' ],
+    name: 'MypsWeb',
+    components: { AppLink },
     props: {
         scrollWaiter: {
             type: Object,
-            required: true
+            required: true,
         },
     },
     mounted() {
-        this.scrollWaiter.flush()
+        this.scrollWaiter.flush();
     },
     methods: {
         setupWaiter() {
-            this.scrollWaiter.add()
+            this.scrollWaiter.add();
         },
         flushWaiter() {
-            this.scrollWaiter.flush()
+            this.scrollWaiter.flush();
         },
-        compress: s => compressor.compress(s),
-        decompress: s => compressor.decompress(s)
-    }
+        compress: s => window.btoa(compressor.compress(s + ' ')),
+        decompress: s => compressor.decompress(window.atob(s)),
+        /* compress: s => window.btoa(s), */
+        /* decompress: s => window.atob(s), */
+    },
 }
 </script>

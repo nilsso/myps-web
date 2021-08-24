@@ -6,7 +6,7 @@
     }
 
     .btn {
-        @apply relative text-center p-2e rounded;
+        @apply relative inline-block text-center p-2e rounded select-none;
         color: theme(colors.white);
         background-color: var(--btn-normal);
         line-height: 1 !important;
@@ -14,12 +14,14 @@
             @apply ring-2 ring-blue-500;
         }
         &:hover {
+            color: theme(colors.white);
             background-color: var(--btn-hover);
         }
         &:active {
             background-color: var(--btn-active);
         }
-        &:disabled {
+        &:disabled, &.disabled {
+            @apply pointer-events-none;
             background-color: var(--btn-active);
             &::before {
                 @apply absolute inset-0 w-full h-full bg-gray-500 bg-opacity-50;
@@ -29,7 +31,7 @@
         }
     }
     .btn-inv {
-        @apply relative text-center p-2e rounded ring-2 ring-inset;
+        @apply relative inline-block text-center p-2e rounded ring-2 ring-inset select-none;
         --tw-ring-color: var(--btn-normal);
         color: var(--btn-normal);
         background-color: theme(colors.white);
@@ -45,7 +47,7 @@
             --tw-ring-color: var(--btn-active);
             color: var(--btn-active);
         }
-        &:disabled {
+        &:disabled, &.disabled {
             --tw-ring-color: var(--btn-active);
             color: var(--btn-active);
             &::before {

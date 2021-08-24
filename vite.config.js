@@ -5,8 +5,12 @@ import ViteRsw from 'vite-plugin-rsw'
 
 export default defineConfig({
     plugins: [
-        Vue({ include: [/(?<!\.md)\.vue$/] }),
+        Vue(),
+        // Vue({ include: [/(?<!\.md)\.vue$/] }),
         ViteAliases(),
-        ViteRsw({ crates: [ 'wasm' ] }),
+        ViteRsw({
+            root: 'wasm',
+            crates: [ 'myps-mips' ]
+        })
     ]
 })

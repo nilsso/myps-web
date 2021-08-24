@@ -1,6 +1,5 @@
 import { defineAsyncComponent } from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
-import Editor from '@views/Editor.vue'
 import About from '@views/About.vue'
 // const Editor = () => import('@views/Editor.vue')
 // const About = () => import('@views/About.vue')
@@ -9,7 +8,7 @@ const routes = [
     {
         path: '/',
         name: 'Editor',
-        component: Editor,
+        component: () => import('@views/Editor.vue'),
         meta: { transitionName: 'fade' }
     },
     {
