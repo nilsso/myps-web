@@ -4,21 +4,23 @@ import About from '@views/About.vue'
 // const Editor = () => import('@views/Editor.vue')
 // const About = () => import('@views/About.vue')
 
+const baseUrl = '/apps/myps2';
+
 const routes = [
     {
-        path: '/',
+        path: baseUrl + '/',
         name: 'Editor',
         component: () => import('@views/Editor.vue'),
         meta: { transitionName: 'fade' }
     },
     {
-        path: '/about',
+        path: baseUrl + '/about',
         name: 'About',
         component: About,
         meta: { transitionName: 'fade' }
     },
     {
-        path: '/:pathMatch(.*)*',
+        path: baseUrl + '/:pathMatch(.*)*',
         redirect: { name: 'Editor' }
     }
 ]

@@ -30,8 +30,9 @@
 import AppLink from '@components/AppLink.vue';
 import '@css/base.css';
 
-const jsscompress = import('js-string-compression');
-const compressor = new jsscompress.Hauffman();
+/* const jsscompress = import('js-string-compression'); */
+/* import jsscompress from 'js-string-compression'; */
+/* import * as jsscompress from 'js-string-compression'; */
 
 export default {
     name: 'MypsWeb',
@@ -52,10 +53,25 @@ export default {
         flushWaiter() {
             this.scrollWaiter.flush();
         },
-        compress: s => window.btoa(compressor.compress(s + ' ')),
-        decompress: s => compressor.decompress(window.atob(s)),
-        /* compress: s => window.btoa(s), */
-        /* decompress: s => window.atob(s), */
+        /* compress(s) { */
+        /*     return window.btoa(this.compressor.compress(s + ' ')); */
+        /* }, */
+        /* decompress(s) { */
+        /*     return this.compressor.decompress(window.atob(s)); */
+        /* }, */
+        compress: s => window.btoa(s),
+        decompress: s => window.atob(s),
     },
+    /* async setup() { */
+    /*     let data = { */
+    /*         compressor: null, */
+    /*     }; */
+    /*     onMounted(async () => { */
+    /*     /1* const jsscompress = await import('js-string-compression'); *1/ */
+    /*     /1* const compressor = new jsscompress.Hauffman(); *1/ */
+    /*     /1* data.compressor = compressor; *1/ */
+    /*     }); */
+    /*     return data; */
+    /* }, */
 }
 </script>

@@ -4,6 +4,7 @@ import { ViteAliases } from 'vite-aliases'
 import ViteRsw from 'vite-plugin-rsw'
 
 export default defineConfig({
+    base: '/apps/myps2/',
     plugins: [
         Vue(),
         // Vue({ include: [/(?<!\.md)\.vue$/] }),

@@ -190,9 +190,10 @@ export default {
             // and when setting the value from hash. Doesn't seem to marked dirty sometimes.
             /* if (!this.inputEditor.isClean()) { */
                 try {
-                    const f = this.toggleMypsMips ? optimize_mips : translate_myps;
+                    const f = this.menuData.toggleMypsMips ? optimize_mips : translate_myps;
+                    const value = this.inputEditor.getValue();
                     const output = f(
-                        this.inputEditor.getValue(),
+                        value,
                         this.menuData.optimizeRegisters,
                         this.menuData.removeComments,
                         this.menuData.removeEmptyLines,

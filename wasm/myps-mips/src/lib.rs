@@ -11,9 +11,12 @@ static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
 
 use mips::{Mips, OptimizationConfig};
 
-#[wasm_bindgen]
-pub fn hello() -> String {
-    "Hello".to_owned()
+extern crate web_sys;
+
+macro_rules! log {
+    ( $( $t:tt )* ) => {
+        web_sys::console::log_1(&format!( $( $t )* ).into());
+    }
 }
 
 #[wasm_bindgen]
@@ -41,8 +44,10 @@ pub fn optimize_mips(
         remove_tags: replace_tags,
     };
 
-    mips.optimize(config).unwrap();
-    join(mips.lines.into_iter(), "\n")
+    let optimized = mips.optimize(config).unwrap();
+    let output = join(optimized.lines.into_iter(), "\n");
+
+    output
 }
 
 #[wasm_bindgen]
@@ -72,9 +77,9 @@ pub fn translate_myps(
         remove_tags: replace_tags,
     };
 
-    let mips = Mips::default_with_lines(lines)
+    let optimized = Mips::default_with_lines(lines)
         .unwrap()
         .optimize(config)
         .unwrap();
-    join(mips.lines.into_iter(), "\n")
+    join(optimized.lines.into_iter(), "\n")
 }
